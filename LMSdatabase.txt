@@ -1,0 +1,36 @@
+
+CREATE TABLE student(Student_Id         NUMBER(10) CONSTRAINT std_id_pk PRIMARY KEY,
+                     Student_Name       VARCHAR(20) NOT NULL, 
+                     Course_Name        VARCHAR(20) NOT NULL,
+                     Semister           NUMBER(10) NOT NULL,
+                     Card_Used          NUMBER(10) NOT NULL);
+
+
+CREATE TABLE book(Book_Id               NUMBER(10) CONSTRAINT bk_id_pk PRIMARY KEY,
+                  Book_Name             VARCHAR(20) NOT NULL, 
+                  Author                VARCHAR(20) NOT NULL,
+                  Book_Status           VARCHAR(5) NOT NULL);
+
+
+CREATE TABLE staff (Staff_Id            NUMBER(10) CONSTRAINT staff_id_pk PRIMARY KEY, 
+                    Staff_Name          VARCHAR(20) NOT NULL,
+                    Staff_Department    VARCHAR(20) NOT NULL,
+                    Card_Used           NUMBER(10) NOT NULL; 
+
+
+CREATE TABLE student_issue_return ( Student_Id         NUMBER(10) NOT NULL CONSTRAINT stdId_issret_pk REFERENCES student(Student_Id) ON DELETE CASCADE,
+                                    Book_Id            NUMBER(10) NOT NULL CONSTRAINT stbkId_issret_pk REFERENCES book(Book_Id) ON DELETE CASCADE, 
+                                    Issue_Date         DATE NOT NULL,                                                                                
+                                    Return_Date        DATE NOT NULL,                                                                                 
+                                    Returned_Date      DATE,
+                                    Fine_Amount        NUMBER(10),
+                                    Fine_Paid_Status   VARCHAR(10) DEFAULT 'NULL');                                         
+
+
+CREATE TABLE staff_issue_return   ( Staff_Id          NUMBER(10) NOT NULL CONSTRAINT stfId_issret_pk REFERENCES staff(Staff_Id) ON DELETE CASCADE,
+                                    Book_Id           NUMBER(10) NOT NULL CONSTRAINT stfbkId_issret_pk REFERENCES book(Book_Id) ON DELETE CASCADE, 
+                                    Issue_Date        DATE NOT NULL,
+                                    Return_Date       DATE NOT NULL,
+                                    Returned_Date     DATE);
+
+
